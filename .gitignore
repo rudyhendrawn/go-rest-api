@@ -36,3 +36,6 @@ Thumbs.db
 
 # PostgreSQL Server data dir
 postgres-data
+
+# Environment variables file
+.env

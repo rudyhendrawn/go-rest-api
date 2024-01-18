@@ -12,37 +12,37 @@ import (
 )
 
 var DB *sql.DB
-var DB_USER, DB_PASSWORD, DB_NAME string
+
+var DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME string
 
 func LoadEnv() (string, string, string, string, string) {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	DB_HOST := os.Getenv("DB_HOST")
-	DB_PORT := os.Getenv("DB_PORT")
-	DB_USER := os.Getenv("DB_USER")
-	DB_PASSWORD := os.Getenv("DB_PASSWORD")
-	DB_NAME := os.Getenv("DB_NAME")
+
+	DB_HOST = os.Getenv("DB_HOST")
+	DB_PORT = os.Getenv("DB_PORT")
+	DB_USER = os.Getenv("DB_USER")
+	DB_PASSWORD = os.Getenv("DB_PASSWORD")
+	DB_NAME = os.Getenv("DB_NAME")
 
 	return DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
 }
 
 func ConnectDB() {
-	var DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME string
-	DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME = LoadEnv()
+	LoadEnv()
 
 	// Define the data source name
-	// dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
-	// connectionString := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/" + dbName
-	dsn := DB_USER + ":" + DB_PASSWORD + "@tcp(" + DB_HOST + ":" + DB_PORT + ")/" + DB_NAME
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
+	// dsn := DB_USER + ":" + DB_PASSWORD + "@tcp(" + DB_HOST + ":" + DB_PORT + ")/" + DB_NAME
 
 	// Open a connection to the database
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		panic((err))
 	}
-	// defer db.Close()
+	defer db.Close()
 
 	// Verify the connection to the database
 	if err = db.Ping(); err != nil {
