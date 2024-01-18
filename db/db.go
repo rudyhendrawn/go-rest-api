@@ -33,7 +33,9 @@ func ConnectDB() {
 	DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME = LoadEnv()
 
 	// Define the data source name
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
+	// dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
+	// connectionString := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/" + dbName
+	dsn := DB_USER + ":" + DB_PASSWORD + "@tcp(" + DB_HOST + ":" + DB_PORT + ")/" + DB_NAME
 
 	// Open a connection to the database
 	db, err := sql.Open("postgres", dsn)
