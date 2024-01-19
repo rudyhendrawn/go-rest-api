@@ -5,33 +5,38 @@ import (
 	"fmt"
 	"go-echo-app/models"
 	"log"
-	"os"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
-var DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME string
+// var DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME string
 
-func LoadEnv() (string, string, string, string, string) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+// func LoadEnv() (string, string, string, string, string) {
+// 	err := godotenv.Load()
+// 	if err != nil {
+// 		log.Fatal("Error loading .env file")
+// 	}
 
-	DB_HOST = os.Getenv("DB_HOST")
-	DB_PORT = os.Getenv("DB_PORT")
-	DB_USER = os.Getenv("DB_USER")
-	DB_PASSWORD = os.Getenv("DB_PASSWORD")
-	DB_NAME = os.Getenv("DB_NAME")
+// 	DB_HOST = os.Getenv("DB_HOST")
+// 	DB_PORT = os.Getenv("DB_PORT")
+// 	DB_USER = os.Getenv("DB_USER")
+// 	DB_PASSWORD = os.Getenv("DB_PASSWORD")
+// 	DB_NAME = os.Getenv("DB_NAME")
 
-	return DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
-}
+//		return DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME
+//	}
+const (
+	DB_HOST     = "localhost"
+	DB_PORT     = "5432"
+	DB_USER     = "postgres"
+	DB_PASSWORD = "postgres"
+	DB_NAME     = "postgres"
+)
 
 func ConnectDB() {
-	LoadEnv()
+	// DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME = LoadEnv()
 
 	// Define the data source name
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
@@ -56,11 +61,16 @@ func InitDB() {
 	ConnectDB()
 }
 
+func CreateConnection() *sql.DB {
+	return DB
+}
+
 // GetUserByID fetches a user by ID from the database
 func GetUserByID(id int) (models.User, error) {
 	// Implementation of fetching a user from the database
 	user := models.User{}
-	err := DB.QueryRow("SELECT id, name, email FROM users WHERE ID = $1", id).Scan(&user.ID, &user.Name, &user.Email)
+	log.Println(&user.ID)
+	err := DB.QueryRow("SELECT id, name, email FROM users WHERE id = $1", id).Scan(&user.ID, &user.Name, &user.Email)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			log.Printf("No user with the id %d", id)
@@ -80,6 +90,7 @@ func GetAllUsers() ([]models.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Println(rows)
 	defer rows.Close()
 
 	users := []models.User{}
