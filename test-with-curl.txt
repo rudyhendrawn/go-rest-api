@@ -1,0 +1,2 @@
+curl -X POST http://localhost:1122/users -H 'Content-Type: application/json' -d '{"name":"Rudy H","email":"rudyh@example.com"}'
+curl http://localhost:1122/users/1
