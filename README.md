@@ -1,2 +1,2 @@
 # go-echo-app
-Belajar Golang pakai Echo framework dengan membuat backend REST-API.
+Belajar Golang backend REST-API from scratch.
