@@ -40,10 +40,11 @@ func main() {
 
 	// Set up the router
 	r := mux.NewRouter()
-	r.HandleFunc("/users", userHandler.CreateUser).Methods("POST")
-	r.HandleFunc("/users/{id}", userHandler.GetUserByID).Methods("GET")
-	r.HandleFunc("/posts", postHandler.CreatePost).Methods("POST")
-	r.HandleFunc("/posts/{id}", postHandler.GetPostByID).Methods("GET")
+	r.HandleFunc("/createuser", userHandler.CreateUser).Methods("POST")
+	r.HandleFunc("/user/{id}", userHandler.GetUserByID).Methods("GET")
+	r.HandleFunc("/users", userHandler.GetAllUsers).Methods("GET")
+	r.HandleFunc("/createpost", postHandler.CreatePost).Methods("POST")
+	r.HandleFunc("/post/{id}", postHandler.GetPostByID).Methods("GET")
 
 	// Start the server, listening on some port define in variable port
 

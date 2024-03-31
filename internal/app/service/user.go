@@ -10,7 +10,7 @@ import (
 type UserService interface {
 	CreateUser(ctx context.Context, user *model.User) error
 	GetUserByID(ctx context.Context, id int64) (*model.User, error)
-
+	GetAllUsers(ctx context.Context) ([]*model.User, error)
 	// Add more methods here
 }
 
@@ -34,4 +34,10 @@ func (s *userServiceImpl) CreateUser(ctx context.Context, user *model.User) erro
 func (s *userServiceImpl) GetUserByID(ctx context.Context, id int64) (*model.User, error) {
 	// Here, we can add some business logic, like checking if the user exists, before fetching the user
 	return s.userRepo.FindByID(ctx, id)
+}
+
+// GetAllUsers handles fetching all users
+func (s *userServiceImpl) GetAllUsers(ctx context.Context) ([]*model.User, error) {
+	// Here, we can add some business logic, like filtering or sorting, before fetching all users
+	return s.userRepo.GetAllUsers(ctx)
 }
