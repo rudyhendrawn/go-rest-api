@@ -10,6 +10,8 @@ import (
 type PostService interface {
 	CreatePost(ctx context.Context, post *model.Post) error
 	GetPostByID(ctx context.Context, id int64) (*model.Post, error)
+	GetAllPosts(ctx context.Context) ([]*model.Post, error)
+	// Add more methods here
 }
 
 // postServiceImpl implements PostService with a repository layer.
@@ -32,4 +34,10 @@ func (s *postServiceImpl) CreatePost(ctx context.Context, post *model.Post) erro
 func (s *postServiceImpl) GetPostByID(ctx context.Context, id int64) (*model.Post, error) {
 	// Here, we can add some business logic, like checking if the post exists, before fetching the post
 	return s.postRepo.FindByID(ctx, id)
+}
+
+// GetAllPosts handles fetching all posts
+func (s *postServiceImpl) GetAllPosts(ctx context.Context) ([]*model.Post, error) {
+	// Here, we can add some business logic, like filtering or sorting, before fetching all posts
+	return s.postRepo.GetAllPosts(ctx)
 }
