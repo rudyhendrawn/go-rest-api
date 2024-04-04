@@ -1,2 +1,6 @@
-curl -X POST http://localhost:1122/users -H 'Content-Type: application/json' -d '{"name":"Rudy H","email":"rudyh@example.com"}'
-curl http://localhost:1122/users/1
+curl -X POST http://localhost:1122/createuser -H 'Content-Type: application/json' -d '{"name":"Ucil","email":"ucil@example.com"}'
+curl -X POST http://localhost:1122/createpost -H 'Content-Type: application/json' -d '{"user_id": 10, "title":"Hello", "content":"World"}'
+curl http://localhost:1122/user/1
+curl http://localhost:1122/users
+curl http://localhost:1122/post/1
+curl http://localhost:1122/posts

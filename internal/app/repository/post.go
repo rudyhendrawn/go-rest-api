@@ -11,7 +11,7 @@ import (
 type PostRepository interface {
 	FindByID(ctx context.Context, id int64) (*model.Post, error)
 	Create(ctx context.Context, p *model.Post) error
-
+	GetAllPosts(ctx context.Context) ([]*model.Post, error)
 	// Add more methods as needed
 }
 
@@ -45,4 +45,31 @@ func (repo *postRepositoryImpl) Create(ctx context.Context, p *model.Post) error
 	}
 
 	return nil
+}
+
+// GetAllPosts retrieves all posts
+func (repo *postRepositoryImpl) GetAllPosts(ctx context.Context) ([]*model.Post, error) {
+	var posts []*model.Post
+	query := `SELECT id, user_id, title, content FROM posts`
+	rows, err := repo.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("FAILED TO GET ALL POSTS: %w", err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var post model.Post
+		if err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content); err != nil {
+			return nil, fmt.Errorf("FAILED TO SCAN POST: %w", err)
+		}
+
+		posts = append(posts, &post)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("FAILED TO GET ALL POSTS: %w", err)
+	}
+
+	return posts, nil
 }
