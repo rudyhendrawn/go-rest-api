@@ -1,3 +1,8 @@
+CREATE DATABASE go-rest-api;
+
+-- Set cursor to go-rest-api
+\c go-rest-api
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),

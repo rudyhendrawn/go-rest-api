@@ -41,6 +41,14 @@ func main() {
 
 	// Set up the router
 	r := mux.NewRouter()
+<<<<<<< HEAD
+=======
+	r.HandleFunc("/createuser", userHandler.CreateUser).Methods("POST")
+	r.HandleFunc("/user/{id}", userHandler.GetUserByID).Methods("GET")
+	r.HandleFunc("/users", userHandler.GetAllUsers).Methods("GET")
+	r.HandleFunc("/createpost", postHandler.CreatePost).Methods("POST")
+	r.HandleFunc("/post/{id}", postHandler.GetPostByID).Methods("GET")
+>>>>>>> bb363b737a1e1c7e3b175f584ce37e438e84a7ad
 
 	// Use the middleware
 	r.Use(middleware.Logging)
