@@ -45,6 +45,7 @@ func main() {
 	// Use the middleware
 	r.Use(middleware.Logging)
 	r.Use(middleware.ErrorHandler)
+	r.Use(middleware.CORSMiddleware)
 
 	// Define the routes that using Error Handler
 	// r.Handle("/users", middleware.ErrorHandlerFunc(userHandler.GetAllUsers)).Methods("GET")
