@@ -47,6 +47,19 @@ func main() {
 	r.Use(middleware.Logging)
 	r.Use(middleware.ErrorHandler)
 
+	// r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+	// 	log.Println("Test route hit")
+	// 	w.WriteHeader(http.StatusOK)
+	// 	w.Write([]byte("Test route response"))
+	// })
+
+	// r.HandleFunc("/createuser", func(w http.ResponseWriter, r *http.Request) {
+	// 	log.Println("/createuser route hit")
+	// 	// Your handler logic here...
+	// 	w.WriteHeader(http.StatusOK)
+	// 	w.Write([]byte("Create user route response"))
+	// }).Methods("POST", "OPTIONS")
+
 	// Define the routes that using Error Handler
 	// r.Handle("/users", middleware.ErrorHandlerFunc(userHandler.GetAllUsers)).Methods("GET")
 	// r.Handle("/users/{id}", middleware.ErrorHandlerFunc(userHandler.GetUserByID)).Methods("GET")

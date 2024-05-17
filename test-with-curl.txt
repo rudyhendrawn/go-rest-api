@@ -6,6 +6,8 @@ Use curl to directly test your route with both GET (or POST) and OPTIONS methods
 Ensure you're targeting the correct URL and port:
 curl -X OPTIONS http://localhost:1122/createuser/ -i
 
+curl -X OPTIONS http://localhost:1122/users/ -i -H "Access-Control-Request-Method: POST" -H "Origin: http://localhost:8080"
+
 Use curl to manually test your CORS setup, especially for the OPTIONS preflight request. 
 This can help identify if the issue is with the client setup or the server configuration:
 curl -X OPTIONS http://localhost:1122/createuser -H "Origin: http://localhost:8080" -H "Access-Control-Request-Method: POST" -H 'Content-Type: application/json' -d '{"name":"Lili","email":"lili@example.com"}' -i
