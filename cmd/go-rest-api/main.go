@@ -43,17 +43,9 @@ func main() {
 	r := mux.NewRouter()
 
 	// Use the middleware
+	r.Use(middleware.CORSMiddleware)
 	r.Use(middleware.Logging)
 	r.Use(middleware.ErrorHandler)
-	r.Use(middleware.CORSMiddleware)
-
-	// Define the routes that using Error Handler
-	// r.Handle("/users", middleware.ErrorHandlerFunc(userHandler.GetAllUsers)).Methods("GET")
-	// r.Handle("/users/{id}", middleware.ErrorHandlerFunc(userHandler.GetUserByID)).Methods("GET")
-	// r.Handle("/users", middleware.ErrorHandlerFunc(userHandler.CreateUser)).Methods("POST")
-	// r.Handle("/posts", middleware.ErrorHandlerFunc(postHandler.GetAllPosts)).Methods("GET")
-	// r.Handle("/posts/{id}", middleware.ErrorHandlerFunc(postHandler.GetPostByID)).Methods("GET")
-	// r.Handle("/posts", middleware.ErrorHandlerFunc(postHandler.CreatePost)).Methods("POST")
 
 	r.Handle("/createuser", middleware.ErrorHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		err := userHandler.CreateUser(w, r)
@@ -109,7 +101,6 @@ func main() {
 	if err := http.ListenAndServe(":"+strconv.Itoa(port), r); err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
-
 	// defer db.Close()
 }
 
@@ -117,6 +108,6 @@ func main() {
 // 1. Middleware
 //  - Logging (v)
 //  - Error handling (v)
-//  - CORS
+//  - CORS (v)
 //  - Authentication
 //  - Authorization
