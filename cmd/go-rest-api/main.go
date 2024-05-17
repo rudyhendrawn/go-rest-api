@@ -47,27 +47,6 @@ func main() {
 	r.Use(middleware.Logging)
 	r.Use(middleware.ErrorHandler)
 
-	// r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
-	// 	log.Println("Test route hit")
-	// 	w.WriteHeader(http.StatusOK)
-	// 	w.Write([]byte("Test route response"))
-	// })
-
-	// r.HandleFunc("/createuser", func(w http.ResponseWriter, r *http.Request) {
-	// 	log.Println("/createuser route hit")
-	// 	// Your handler logic here...
-	// 	w.WriteHeader(http.StatusOK)
-	// 	w.Write([]byte("Create user route response"))
-	// }).Methods("POST", "OPTIONS")
-
-	// Define the routes that using Error Handler
-	// r.Handle("/users", middleware.ErrorHandlerFunc(userHandler.GetAllUsers)).Methods("GET")
-	// r.Handle("/users/{id}", middleware.ErrorHandlerFunc(userHandler.GetUserByID)).Methods("GET")
-	// r.Handle("/createuser", middleware.ErrorHandlerFunc(userHandler.CreateUser)).Methods("POST")
-	// r.Handle("/posts", middleware.ErrorHandlerFunc(postHandler.GetAllPosts)).Methods("GET")
-	// r.Handle("/posts/{id}", middleware.ErrorHandlerFunc(postHandler.GetPostByID)).Methods("GET")
-	// r.Handle("/createpost", middleware.ErrorHandlerFunc(postHandler.CreatePost)).Methods("POST")
-
 	r.Handle("/createuser", middleware.ErrorHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		err := userHandler.CreateUser(w, r)
 		if err != nil {
@@ -122,7 +101,6 @@ func main() {
 	if err := http.ListenAndServe(":"+strconv.Itoa(port), r); err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
-
 	// defer db.Close()
 }
 
