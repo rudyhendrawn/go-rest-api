@@ -25,7 +25,7 @@ func CORSMiddleware(next http.Handler) http.Handler {
 		// If it's a preflight OPTIONS request, stop here
 		if r.Method == "OPTIONS" {
 			w.WriteHeader(http.StatusOK)
-			// http.Error(w, "No Content", http.StatusNoContent)
+			http.Error(w, "No Content", http.StatusNoContent)
 			return
 		}
 
